@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Python Packager",
     "author": "Spectral Vectors",
-    "version": (0, 0, 1),
+    "version": (0, 0, 2),
     "blender": (2, 90, 0),
     "location": "Edit > Preferences > Addons > PythonPackager",
     "description": "A tool to download extra Python packages to Blender's internal Python",
@@ -17,7 +17,7 @@ class PythonPackagerOperator(bpy.types.Operator):
     """Tooltip"""
     
     bl_idname = "addon.pythonpackager_operator"
-    bl_label = "Python Packager Operator"
+    bl_label = "Install Package"
 
     def execute(self, context):
         try:
@@ -52,7 +52,7 @@ class PythonPackagerPreferences(bpy.types.AddonPreferences):
     bl_idname = __name__
 
     PackageName: bpy.props.StringProperty(
-        name='Package Name',
+        name='Package',
         description='The name of the package as it appears in PyPI',
         default='',
     )
@@ -68,18 +68,18 @@ class PythonPackagerPreferences(bpy.types.AddonPreferences):
 
 class PythonPackagerMessageBox(bpy.types.Operator):
     bl_idname = "message.messagebox"
-    bl_label = "Python Packager Message"
-  
+    bl_label = "Python Packager - Permission Error!"
+
     def execute(self, context):
         #print(self.message)
         return {'FINISHED'}
- 
+
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self, width = 400)
- 
-    def draw(self, context):
-        self.layout.label(text= "You must run Blender as Administrator to install Python Packages. Close, then reopen Blender by right-clicking and selecting 'Run as Administrator'")
 
+    def draw(self, context):
+        self.layout.label(text= "You must run Blender as Administrator to install Python Packages.")
+        self.layout.label(text="Close, then reopen Blender by right-clicking and selecting 'Run as Administrator'")
 
 classes = [
     PythonPackagerPreferences,
